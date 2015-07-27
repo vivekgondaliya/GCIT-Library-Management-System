@@ -104,6 +104,7 @@ libraryModule.controller('homeController', ['$scope', function($scope){
 		link:"https://www.mongodb.org/"
 	},
 	]
+
 }]);
 
 //AUTHOR
