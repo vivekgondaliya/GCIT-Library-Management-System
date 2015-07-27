@@ -1,0 +1,55 @@
+<div class="container" data-ng-controller="bookCtrl">
+	<h2>Book List</h2>
+	<hr />
+	<div class="col-md-6 col-md-offset-3">
+		<!--Sidebar content-->
+		<form>
+			<div class="form-inline">
+				Search: <input class="form-control" data-ng-model="query">
+				Sort by: <select class="form-control" data-ng-model="orderProp">
+					<option value="title">Alphabetical</option>
+					<option value="-bookId">Newest</option>
+					<option value="bookId">Oldest</option>
+				</select>
+			</div>
+		</form>
+	</div>
+
+	<div class="row">
+		<div>
+			<!-- PAGINATION -->
+			<br/><div align="right">
+				<pagination total-items="books.length" ng-model="currentPage"
+					items-per-page="pageSize" ng-change="pageChanged()"></pagination>
+			</div>
+			<!--Body content-->
+			<table class="table table-hover">
+				<tr>
+					<th>Book ID</th>
+					<th>Title</th>
+					<th>Publisher</th>
+					<th>Authors</th>
+					<th>Genres</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+
+				<tr
+					data-ng-repeat="a in books | filter:query | orderBy:orderProp |startFrom:(currentPage -1) * pageSize |limitTo:pageSize">
+					<td>{{a.bookId}}</td>
+					<td>{{a.title}}</td>
+					<td>{{a.publisher.publisherName}}</td>
+					<td>{{a.author.authorName}}</td>
+					<td>{{a.genre.genreName}}</td>
+					<td><button type="button" class="btn btn-sm btn-success"
+							data-ng-click="editAuthor(a.bookId)">Edit</button></td>
+					<td><button type="button" class="btn btn-sm btn-danger"
+							data-ng-click="deleteAuthor(a.bookId)">Delete</button></td>
+				</tr>
+			</table>
+
+		</div>
+	</div>
+
+<hr />
+<a class="btn btn-warning btn-sm" style="margin: 5px; width: 90px;" href="#/adminServices">Go Back</a>

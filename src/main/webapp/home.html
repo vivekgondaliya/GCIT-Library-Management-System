@@ -1,0 +1,14 @@
+<div class="row">
+	<!-- Main jumbotron for a primary marketing message or call to action -->
+	<div class="col-md-8 col-md-offset-2" ng-controller="homeController">
+		<marquee behavior="alternate">
+			<h3>Welcome to LMS Home!</h3>
+		</marquee>
+		<carousel interval="myInterval" no-wrap="noWrapSlides"> <slide
+			ng-repeat="slide in slides" active="slide.active"> 
+				<a href="{{slide.link}}">
+					<img ng-src="{{slide.image}}" style="margin: auto;"> 
+				</a>	
+		</slide> </carousel>
+	</div>
+</div>

@@ -1,0 +1,34 @@
+<div data-ng-controller="publisherCtrl">
+<nav>
+	<ul class="pagination">
+		<li><a href="pagePublishers?pageNo=1">1</a></li>
+		<li><a href="pagePublishers?pageNo=2">2</a></li>
+	</ul>
+</nav>
+<table class="table table-striped" >
+	<tr>
+		<th>Publisher Name</th>
+		<th>Publisher Address</th>
+		<th>Publisher Phone</th>
+		<th>Edit</th>
+		<th>Delete</th>
+	</tr>
+
+	<tr data-ng-repeat="pub in publishers">
+		<td>{{pub.publisherName}}</td>
+		<td>{{pub.publisherAddress}}</td>
+		<td>{{pub.publisherPhone}}</td>
+		<td><button class="btn btn-success"
+				href="editAuthor.jsp?authorIdToEdit"
+				data-target="#myModal1" data-toggle="modal">Edit</button></td>
+		<td><button class="btn btn-danger"
+				onclick="javascript:location.href='deleteAuthor?authorId';">Delete</button></td>
+	</tr>
+</table>
+
+<div id="myModal1" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content"></div>
+	</div>
+</div>
+</div>

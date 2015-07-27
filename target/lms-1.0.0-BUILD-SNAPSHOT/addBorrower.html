@@ -1,0 +1,33 @@
+<div data-ng-controller="borrowerCtrl" class="container">
+	<div class="row">
+		<div class="col-md-6">
+		<h2>Add Borrower</h2>
+			<form class="form-group" action="" method="post">
+				<table class="table table-striped" style="border: groove;">
+					<tr>
+						<td><label>Enter Borrower Name:</label></td>
+						<td><input class="form-control" type="text"
+							data-ng-model="borrowerName" /></td>
+					</tr>
+					<tr>
+						<td><label>Enter Borrower Address:</label></td>
+						<td><input class="form-control" type="text"
+							data-ng-model="borrowerAddress" /></td>
+					</tr>
+					<tr>
+						<td><label>Enter Borrower Phone:</label></td>
+						<td><input class="form-control" type="text"
+							data-ng-model="borrowerPhone" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><button class="btn btn-sm btn-info"
+					style="margin: 5px; width: 100px;" type="button" data-ng-click="addBorrower()">Add Borrower</button>
+						<a class="btn btn-warning btn-sm" style="margin: 5px; width: 100px;" href="#/adminServices">Cancel</a>
+					</tr>
+				</table>
+			</form>
+		<div class="col-md-6"></div>
+		</div>
+	</div>
+</div>

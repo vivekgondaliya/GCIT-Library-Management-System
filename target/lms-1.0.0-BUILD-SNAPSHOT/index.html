@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="libraryModule">
+<head>
+<title>Library Management System</title>
+
+<!-- Bootstrap core CSS -->
+<link href="http://getbootstrap.com/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<!-- Bootstrap theme -->
+<link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="http://getbootstrap.com/examples/theme/theme.css"
+	rel="stylesheet">
+
+<script src="./resources/ie-emulation-modes-warning.js"></script>
+
+<script src="./resources/ie10-viewport-bug-workaround.js"></script>
+
+<script data-require="angular.js@*" data-semver="1.4.3"
+	src="http://code.angularjs.org/1.4.3/angular.js"></script>
+<script data-require="angular-route.js@*" data-semver="1.4.3"
+	src="http://code.angularjs.org/1.4.3/angular-route.js"></script>
+<script data-require="angular-route.js@*" data-semver="1.4.3"
+	src="http://code.angularjs.org/1.4.3/angular-cookies.js"></script>
+<script src="https://code.angularjs.org/1.4.3/angular-animate.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.3.0/animate.min.css" type="text/css"/>
+<script src="./resources/app.js"></script>
+<script src="./resources/ui-bootstrap-tpls-0.13.1.min.js"></script>
+<link rel="stylesheet" href="./resources/custom.css" type="text/css"/>  
+<link rel="stylesheet" href="./resources/xeditable.css" type="text/css"/>    
+<script src="./resources/xeditable.min.js"></script>
+<style id="holderjs-style" type="text/css"></style>
+</head>
+<body style="margin-left: 2%;">
+	<!-- Fixed navbar -->
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation" ng-controller="navController">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/home">Library Management
+					System</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li ng-class="{active: isActive('/home')}"><a href="#/home">Home</a></li>
+					<li ng-class="{active: isActive('/adminServices')}"><a href="#/adminServices">Administrator</a></li>
+					<li ng-class="{active: isActive('/librarianServices')}"><a href="#/librarianServices">Librarian</a></li>
+					<li ng-class="{active: isActive('/borrowerServices')}"><a href="#/borrowerServices">Borrower</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+	<div class="container">
+		<div ng-view></div>
+	</div>
+
+	<script src="./resources/jquery.min.js"></script>
+	<script src="./resources/bootstrap.min.js"></script>
+	<script src="./resources/docs.min.js"></script>
+
+</body>
+</html>
