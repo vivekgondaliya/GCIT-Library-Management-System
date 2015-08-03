@@ -1,34 +1,78 @@
-<div data-ng-controller="publisherCtrl">
-<nav>
-	<ul class="pagination">
-		<li><a href="pagePublishers?pageNo=1">1</a></li>
-		<li><a href="pagePublishers?pageNo=2">2</a></li>
-	</ul>
-</nav>
-<table class="table table-striped" >
-	<tr>
-		<th>Publisher Name</th>
-		<th>Publisher Address</th>
-		<th>Publisher Phone</th>
-		<th>Edit</th>
-		<th>Delete</th>
-	</tr>
+<div class="container" data-ng-controller="publisherCtrl">
+	<h2>Add Publisher</h2>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="well">
+				<form>
+					<div class="form-inline">
+						Search: <input class="form-control" data-ng-model="query">
+						Sort by: <select class="form-control" data-ng-model="orderProp">
+							<option value="publisherName">Alphabetical</option>
+							<option value="-publisherId">Newest</option>
+							<option value="publisherId">Oldest</option>
+						</select>
+					</div>
+				</form>
+				<br /> <br />
+				<form class="form-group" action="" method="post">
+					<table class="table table-striped">
+						<tr>
+							<td><label>Enter Publisher Name:</label></td>
+							<td><input class="form-control" type="text"
+								data-ng-model="publisherName" /></td>
+						</tr>
+						<tr>
+							<td><label>Enter Publisher Address:</label></td>
+							<td><input class="form-control" type="text"
+								data-ng-model="publisherAddress" /></td>
+						</tr>
+						<tr>
+							<td><label>Enter Publisher Phone:</label></td>
+							<td><input class="form-control" type="text"
+								data-ng-model="publisherPhone" /></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><button class="btn btn-sm btn-primary"
+									style="margin: 5px; width: 100px;" type="button"
+									data-ng-click="addPublisher()">Add Publisher</button> <a
+								class="btn btn-warning btn-sm"
+								style="margin: 5px; width: 100px;" href="#/adminServices">Cancel</a>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<table class="table table-hover">
+				<tr>
+					<th>Publisher Name</th>
+					<th>Publisher Address</th>
+					<th>Publisher Phone</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
 
-	<tr data-ng-repeat="pub in publishers">
-		<td>{{pub.publisherName}}</td>
-		<td>{{pub.publisherAddress}}</td>
-		<td>{{pub.publisherPhone}}</td>
-		<td><button class="btn btn-success"
-				href="editAuthor.jsp?authorIdToEdit"
-				data-target="#myModal1" data-toggle="modal">Edit</button></td>
-		<td><button class="btn btn-danger"
-				onclick="javascript:location.href='deleteAuthor?authorId';">Delete</button></td>
-	</tr>
-</table>
-
-<div id="myModal1" class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content"></div>
+				<tr data-ng-repeat="pub in publishers | filter:query | orderBy:orderProp |startFrom:(currentPage -1) * pageSize |limitTo:pageSize as filtered_result track by pub.publisherId">
+					<td>{{pub.publisherName}}</td>
+					<td>{{pub.publisherAddress}}</td>
+					<td>{{pub.publisherPhone}}</td>
+					<td><i class="glyphicon glyphicon-pencil"
+						data-ng-click="editPublisher()"></i></td>
+					<td><i class="glyphicon glyphicon-trash"
+						data-ng-click="deletePublisher($index)"></i></td>
+				</tr>
+			</table>
+		</div>
 	</div>
-</div>
+
+	<div class="row">
+		<br />
+		<div align="right">
+			<pagination total-items="publishers.length" ng-model="currentPage"
+				items-per-page="pageSize" ng-change="pageChanged()"></pagination>
+		</div>
+	</div>
+	<hr />
 </div>

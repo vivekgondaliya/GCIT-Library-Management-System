@@ -228,17 +228,23 @@ libraryModule.controller('bookCtrl', function( $scope, $http, $cookieStore) {
 			});
 		});
 		
-//		angular.forEach($scope.insertGenre, function(value, key){
-//			$scope.genres.push(key+':'+value);
-//		});		
+		$scope.$watch('selected', function(nowSelected){
+			$scope.insertGenre =[];
+			if(!nowSelected){
+				return;
+			}
+			angular.forEach(nowSelected, function(value, key){
+				$scope.insertGenre.push(key+':' +value);
+			});
+		});	
 		$scope.publishers.push($scope.insertPublisher);
 		
-		console.log("Authors: " + $scope.authors);
+		
 		$http.post('http://localhost:8080/lms/book/add', {
 			'title': $scope.insertTitle,
 			'publisher':$scope.insertPublisher,
 			'authors': $scope.insertAuthor,
-			'genres': $scope.genres
+			'genres': $scope.insertGenre
 		}).success(function(data) {
 			console.log(data);
 			$scope.books.push(data);
@@ -269,6 +275,14 @@ libraryModule.controller('bookCtrl', function( $scope, $http, $cookieStore) {
 
 //PUBLISHER
 libraryModule.controller('publisherCtrl', function( $scope, $http, $cookieStore) {
+	
+	$scope.publishers = [];
+	//data Order By
+	$scope.orderProp = 'publisherId';
+	//pagination
+	$scope.pageSize= 5;
+	$scope.currentPage = 1;
+	
 	//get all authors and display initially
 	$http.get('http://localhost:8080/lms/publishers/get').success(function(data) {
 		$scope.publishers = data;	
@@ -280,8 +294,7 @@ libraryModule.controller('publisherCtrl', function( $scope, $http, $cookieStore)
 	$scope.addPublisher = function(){	
 		$http.post('http://localhost:8080/lms/publisher/add', {publisherName: $scope.publisherName, publisherAddress: $scope.publisherAddress, publisherPhone: $scope.publisherPhone})
 		.success(function(data) {
-			alert('Publisher Added.');
-			$scope.pubilshers = data;
+			$scope.publishers.push(data);
 		})
 		.error(function(data, status){
 			console.log(data);
@@ -291,6 +304,19 @@ libraryModule.controller('publisherCtrl', function( $scope, $http, $cookieStore)
 		$scope.publisherAddress= '';
 		$scope.publisherPhone= '';
 	};
+	
+	//delete Publisher
+	$scope.deletePublisher = function(index){
+		$http.post('http://localhost:8080/lms/publisher/delete', {
+			'publisherId': $scope.publishers[index].publisherId
+			}).success(function(data) {
+			console.log("Pub Deleted");
+			$scope.publishers.splice(index, 1);
+		})
+		.error(function(data, status){
+			console.log(data);
+		});
+	}
 });
 
 //BORROWER

@@ -1,7 +1,7 @@
 @CHARSET "ISO-8859-1";
 tr.ng-enter{
-	animation: bounceInUp 1s;
+	animation: fadeIn 1s;
 }
 tr.ng-leave{
-	animation: bounceOut 1s;
+	animation: fadeOut 1s;
 }
