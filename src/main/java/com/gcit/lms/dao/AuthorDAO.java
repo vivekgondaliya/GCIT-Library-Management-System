@@ -72,20 +72,7 @@ public class AuthorDAO extends BaseDAO<Author> implements Serializable, ResultSe
 		Query query = new Query(Criteria.where("_id").is(authorId));
         return this.mongoOps.findOne(query, Author.class, AUTHOR_COLLECTION);
 	}
-
-	//author by Name
-	public List<Author> readByAuthorName(String searchString) throws Exception{
-		searchString = "/"+searchString+"/";
-		Query query = new Query(Criteria.where("authorName").regex(searchString));
-		return mongoOps.find(query, Author.class, AUTHOR_COLLECTION);
-	}
-
-	//read for PAGINATION
-	public List<Author> readAll(int pageNumber, int nPerPage) throws Exception{
-		//db.students.find().skip(pageNumber > 0 ? ((pageNumber-1)*nPerPage) : 0).limit(nPerPage).forEach( function(student) { print(student.name + "<p>"); } );
-		return mongoOps.findAll(Author.class, AUTHOR_COLLECTION);
-	}
-
+	
 	//returns COUNT
 	public long readCount() throws Exception{
 		Query query = new Query(Criteria.where("_id").exists(true));

@@ -100,7 +100,7 @@ public class HomeController {
 			//return "Book Added Sucessfully.";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return book;
+			return null;
 			//return "Book Add Failed.";
 		}
 	}
@@ -187,29 +187,11 @@ public class HomeController {
 		}
 	}
 	
-	//read PageNo
-	@RequestMapping(value="/authors/get/{pageNo}/{pageSize}", method={RequestMethod.GET, RequestMethod.POST}, produces="application/json")
-	public List<Author> getAuthors(@PathVariable int pageNo, @PathVariable int pageSize){
-		try {
-			return authorDAO.readAll(pageNo, pageSize);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
 	//read One
 	@RequestMapping(value = "/author/getOne", method = RequestMethod.POST, 
 			consumes = "application/json")
 	public Author getAuthor(@RequestBody Author auth) throws Exception {
 		return authorDAO.readOne(auth.getAuthorId());
-	}
-
-	//read Search
-	@RequestMapping(value = "/author/search", method = RequestMethod.POST, 
-			consumes = "application/json")
-	public Author searchAuthor(@RequestBody Author auth) throws Exception {
-		return (Author) authorDAO.readByAuthorName(auth.getAuthorName());
 	}
 
 	//BOOKs
@@ -263,7 +245,6 @@ public class HomeController {
 	@RequestMapping(value="/borrowers/get", method={RequestMethod.GET, RequestMethod.POST}, produces="application/json")
 	public List<Borrower> getBorrowers(){
 		try {
-			System.out.println("Borrower Here.");
 			return borrowerDAO.readAll();
 		} catch (Exception e) {
 			e.printStackTrace();

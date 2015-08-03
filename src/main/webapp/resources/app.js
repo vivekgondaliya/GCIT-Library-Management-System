@@ -181,6 +181,9 @@ libraryModule.controller('authorCtrl', ['$rootScope','$scope','$http','$modal', 
 //BOOK
 libraryModule.controller('bookCtrl', function( $scope, $http, $cookieStore) {
 	$scope.books=[];
+	$scope.publishers= [];
+	$scope.authors = [];
+	$scope.genres= [];
 	//get all authors and display initially
 	$http.get('http://localhost:8080/lms/books/get').success(function(data) {
 		$scope.books = data;	
@@ -211,11 +214,31 @@ libraryModule.controller('bookCtrl', function( $scope, $http, $cookieStore) {
 	//add Book
 	$scope.addBook = function(){
 		console.log($scope.insertTitle);
+		console.log($scope.insertPublisher);
+		console.log($scope.insertAuthor);
+		console.log($scope.insertGenre)
+		$scope.selected=[];
+		$scope.$watch('selected', function(nowSelected){
+			$scope.insertAuthor =[];
+			if(!nowSelected){
+				return;
+			}
+			angular.forEach(nowSelected, function(value, key){
+				$scope.insertAuthor.push(key+':' +value);
+			});
+		});
+		
+//		angular.forEach($scope.insertGenre, function(value, key){
+//			$scope.genres.push(key+':'+value);
+//		});		
+		$scope.publishers.push($scope.insertPublisher);
+		
+		console.log("Authors: " + $scope.authors);
 		$http.post('http://localhost:8080/lms/book/add', {
-			'title': $scope.insertTitle, 
-			'authors':$scope.insertAuthor, 
-			'genres':$scope.insertGenre, 
-			'publisher':$scope.insertPublisher
+			'title': $scope.insertTitle,
+			'publisher':$scope.insertPublisher,
+			'authors': $scope.insertAuthor,
+			'genres': $scope.genres
 		}).success(function(data) {
 			console.log(data);
 			$scope.books.push(data);
@@ -228,6 +251,19 @@ libraryModule.controller('bookCtrl', function( $scope, $http, $cookieStore) {
 		$scope.insertTitle= '';
 		$scope.insertGenre= '';
 		$scope.insertPublisher= '';
+	}
+	
+	//deleteAuthor
+	$scope.deleteBook = function(index){
+		$http.post('http://localhost:8080/lms/book/delete', {
+			'bookId': $scope.books[index].bookId
+			}).success(function(data) {
+			console.log("Book Deleted");
+			$scope.books.splice(index, 1);
+		})
+		.error(function(data, status){
+			console.log(data);
+		});
 	}
 });
 
@@ -259,16 +295,32 @@ libraryModule.controller('publisherCtrl', function( $scope, $http, $cookieStore)
 
 //BORROWER
 libraryModule.controller('borrowerCtrl', function( $scope, $http, $cookieStore) {
+	
+	$scope.borrowers = [];
 	$http.get('http://localhost:8080/lms/borrowers/get').success(function(data) {
 		$scope.borrowers = data;	
+	})
+	.error(function(data, status){
+		console.log(data);
 	});
 
+	//data Order By
+	$scope.orderProp = 'cardNo';
+
+	//pagination
+	$scope.pageSize= 5;
+	$scope.currentPage = 1;
+
+	//add Borrower
 	$scope.addBorrower = function(){	
-		$http.post('http://localhost:8080/lms/borrower/add', {name: $scope.borrowerName, address: $scope.borrowerAddress, phone: $scope.borrowerPhone})
-		.success(function(data) {
-			alert('Borrower Added.');
-			$scope.borrowers = data;
-		})
+		$http.post('http://localhost:8080/lms/borrower/add', {
+			'name': $scope.borrowerName, 
+			'address': $scope.borrowerAddress,
+			'phone': $scope.borrowerPhone
+			})
+			.success(function(data) {
+				$scope.borrowers.push(data);
+			})
 		.error(function(data, status){
 			console.log(data);
 		});;
@@ -278,18 +330,16 @@ libraryModule.controller('borrowerCtrl', function( $scope, $http, $cookieStore) 
 		$scope.borrowerPhone= '';
 	};
 
-	$scope.deleteBorrower = function(cardNo){
-		console.log("Card No: " + cardNo);
-		$http.post('http://localhost:8080/lms/borrower/delete', {cardNo: cardNo}).success(function(data) {
+	//deleteBorrower
+	$scope.deleteBorrower = function(index){
+		$http.post('http://localhost:8080/lms/borrower/delete', {cardNo: $scope.borrowers[index].cardNo}).success(function(data) {
+			console.log("Borrower Deleted");
+			$scope.borrowers.splice(index, 1);
+		})
+		.error(function(data, status){
 			console.log(data);
-			$http.get('http://localhost:8080/lms/borrowers/get').success(function(data) {
-				$scope.borrowers = data;
-			})
-			.error(function(data, status){
-				console.log(data);
-			});;
 		});
-	};
+	}
 });
 
 //GENRE

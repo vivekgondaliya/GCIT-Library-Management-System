@@ -1,35 +1,41 @@
 <div data-ng-app="libraryModule">
-
-	<div class="well" data-ng-controller="bookCtrl">
-		<div class="form-group">
-			<label for="usr">Enter Book Title:</label> <input type="text"
-				class="form-control" id="usr" data-ng-model="insertTitle">
-		</div>
-		<div class="form-group">
-			<label for="sel1">Select Authors:</label> <select
-				class="form-control" data-ng-model="insertAuthor"
-				data-ng-options="a.authorName for a in authors">
-				<!-- 	<div>Selected Authors: {{insertAuthor}}</div> -->
-			</select>
-		</div>
-		<div class="form-group">
-			<label for="sel1">Select Genres:</label> <select class="form-control"
-				data-ng-model="insertGenre"
-				data-ng-options="a.genreName for a in genres">
-				<!-- 	<div>Selected Authors: {{insertAuthor}}</div> -->
-			</select>
-		</div>
-		<div class="form-group">
-			<label for="sel1">Select Publishers:</label> <select
-				class="form-control" data-ng-model="insertPublisher"
-				data-ng-options="a.publisherName for a in publishers">
-				<!-- 	<div>Selected Authors: {{insertAuthor}}</div> -->
-			</select>
-		</div>
-		<div class="form-group">
-			<input type="button" class="btn btn-primary" style="margin: 5px; width: 100px;" data-ng-click="addBook()" value="Add book"/> <a
-			class="btn btn-warning btn-sm" style="margin: 5px; width: 100px;"
-			href="#/adminServices">Cancel</a>
+	<h2>Add Publisher</h2>
+	<hr />
+	<div class="row">
+		<div class="col-md-6">
+			<div class="well" data-ng-controller="bookCtrl">
+				<div class="form-group">
+					<label for="usr">Enter Book Title:</label> <input type="text"
+						class="form-control" id="usr" data-ng-model="insertTitle">
+				</div>
+				<div class="form-group">
+					<label for="sel1">Select Authors:</label> <select
+						class="form-control" multiple data-ng-model="insertAuthor"
+						data-ng-options="a.authorName for a in authors">
+						<!-- 	<div>Selected Authors: {{insertAuthor}}</div> -->
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="sel1">Select Genres:</label> <select
+						class="form-control" multiple data-ng-model="insertGenre"
+						data-ng-options="a.genreName for a in genres">
+						<!-- 	<div>Selected Authors: {{insertGenre}}</div> -->
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="sel1">Select Publishers:</label> <select
+						class="form-control" data-ng-model="insertPublisher"
+						data-ng-options="a.publisherName for a in publishers">
+						<!-- 	<div>Selected Authors: {{insertAuthor}}</div> -->
+					</select>
+				</div>
+				<div class="form-group">
+					<input type="button" class="btn btn-primary"
+						style="margin: 5px; width: 100px;" data-ng-click="addBook()"
+						value="Add book" /> <a class="btn btn-warning btn-sm"
+						style="margin: 5px; width: 100px;" href="#/adminServices">Cancel</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

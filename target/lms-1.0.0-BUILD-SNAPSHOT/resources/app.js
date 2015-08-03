@@ -104,6 +104,7 @@ libraryModule.controller('homeController', ['$scope', function($scope){
 		link:"https://www.mongodb.org/"
 	},
 	]
+
 }]);
 
 //AUTHOR
@@ -210,6 +211,9 @@ libraryModule.controller('bookCtrl', function( $scope, $http, $cookieStore) {
 	//add Book
 	$scope.addBook = function(){
 		console.log($scope.insertTitle);
+		console.log($scope.insertAuthor);
+		console.log($scope.insertGenre);
+		console.log($scope.insertPublisher);
 		$http.post('http://localhost:8080/lms/book/add', {
 			'title': $scope.insertTitle, 
 			'authors':$scope.insertAuthor, 
@@ -258,16 +262,32 @@ libraryModule.controller('publisherCtrl', function( $scope, $http, $cookieStore)
 
 //BORROWER
 libraryModule.controller('borrowerCtrl', function( $scope, $http, $cookieStore) {
+	
+	$scope.borrowers = [];
 	$http.get('http://localhost:8080/lms/borrowers/get').success(function(data) {
 		$scope.borrowers = data;	
+	})
+	.error(function(data, status){
+		console.log(data);
 	});
 
+	//data Order By
+	$scope.orderProp = 'cardNo';
+
+	//pagination
+	$scope.pageSize= 5;
+	$scope.currentPage = 1;
+
+	//add Borrower
 	$scope.addBorrower = function(){	
-		$http.post('http://localhost:8080/lms/borrower/add', {name: $scope.borrowerName, address: $scope.borrowerAddress, phone: $scope.borrowerPhone})
-		.success(function(data) {
-			alert('Borrower Added.');
-			$scope.borrowers = data;
-		})
+		$http.post('http://localhost:8080/lms/borrower/add', {
+			'name': $scope.borrowerName, 
+			'address': $scope.borrowerAddress,
+			'phone': $scope.borrowerPhone
+			})
+			.success(function(data) {
+				$scope.borrowers.push(data);
+			})
 		.error(function(data, status){
 			console.log(data);
 		});;
@@ -277,18 +297,16 @@ libraryModule.controller('borrowerCtrl', function( $scope, $http, $cookieStore) 
 		$scope.borrowerPhone= '';
 	};
 
-	$scope.deleteBorrower = function(cardNo){
-		console.log("Card No: " + cardNo);
-		$http.post('http://localhost:8080/lms/borrower/delete', {cardNo: cardNo}).success(function(data) {
+	//deleteBorrower
+	$scope.deleteBorrower = function(index){
+		$http.post('http://localhost:8080/lms/borrower/delete', {cardNo: $scope.borrowers[index].cardNo}).success(function(data) {
+			console.log("Borrower Deleted");
+			$scope.borrowers.splice(index, 1);
+		})
+		.error(function(data, status){
 			console.log(data);
-			$http.get('http://localhost:8080/lms/borrowers/get').success(function(data) {
-				$scope.borrowers = data;
-			})
-			.error(function(data, status){
-				console.log(data);
-			});;
 		});
-	};
+	}
 });
 
 //GENRE

@@ -1,14 +1,12 @@
 package com.gcit.lms.domain;
 
-import java.util.UUID;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Borrower {
 	@Id
-	private UUID cardNo = UUID.randomUUID();
+	private long cardNo;
 	private String name;
 	private String address;
 	private String phone;
@@ -21,10 +19,10 @@ public class Borrower {
 //	public void setBookLoans(List<BookLoans> bookLoans) {
 //		this.bookLoans = bookLoans;
 //	}
-	public UUID getCardNo() {
+	public long getCardNo() {
 		return cardNo;
 	}
-	public void setCardNo(UUID cardNo) {
+	public void setCardNo(long cardNo) {
 		this.cardNo = cardNo;
 	}
 	public String getName() {

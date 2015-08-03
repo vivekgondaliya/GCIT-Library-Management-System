@@ -18,7 +18,8 @@
 	<div class="row">
 		<div>
 			<!-- PAGINATION -->
-			<br/><div align="right">
+			<br />
+			<div align="right">
 				<pagination total-items="books.length" ng-model="currentPage"
 					items-per-page="pageSize" ng-change="pageChanged()"></pagination>
 			</div>
@@ -39,17 +40,18 @@
 					<td>{{a.bookId}}</td>
 					<td>{{a.title}}</td>
 					<td>{{a.publisher.publisherName}}</td>
-					<td>{{a.author.authorName}}</td>
-					<td>{{a.genre.genreName}}</td>
+					<td><ul><li data-ng-repeat="author in a.authors">{{author.authorName}}</li></ul></td>
+					<td><ul><li data-ng-repeat="genre in a.genres">{{genre.genreName}}</li></ul></td>
 					<td><button type="button" class="btn btn-sm btn-success"
-							data-ng-click="editAuthor(a.bookId)">Edit</button></td>
+							data-ng-click="editBook(a.bookId)">Edit</button></td>
 					<td><button type="button" class="btn btn-sm btn-danger"
-							data-ng-click="deleteAuthor(a.bookId)">Delete</button></td>
+							data-ng-click="deleteBook(a.bookId)">Delete</button></td>
 				</tr>
 			</table>
 
 		</div>
 	</div>
 
-<hr />
-<a class="btn btn-warning btn-sm" style="margin: 5px; width: 90px;" href="#/adminServices">Go Back</a>
+	<hr />
+	<a class="btn btn-warning btn-sm" style="margin: 5px; width: 90px;"
+		href="#/adminServices">Go Back</a>
