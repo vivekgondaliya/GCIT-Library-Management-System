@@ -365,44 +365,41 @@ libraryModule.controller('borrowerCtrl', function( $scope, $http, $cookieStore) 
 		.error(function(data, status){
 			console.log(data);
 		});
-	}
+	};
 });
 
 //GENRE
-libraryModule.controller('genreCtrl', ['$scope','$http',
-                                       function( $scope, $http) {
+libraryModule.controller('genreCtrl', ['$scope','$http', function( $scope, $http) {
+	
+	$scope.genres =[];
+	$scope.orderProp = 'genreId';
+	//pagination
+	$scope.pageSize= 5;
+	$scope.currentPage = 1;
+	
 	$http.get('http://localhost:8080/lms/genres/get').success(function(data) {
 		$scope.genres = data;
 	});
-	$scope.orderProp = 'genreId';
-
+	
+	//add Genre
 	$scope.addGenre = function(){
 		$http.post('http://localhost:8080/lms/genre/add', {genreName: $scope.insertGenre}).success(function(data) {
 			console.log(data);
-			$scope.genres = data;
+			$scope.genres.push(data);
 		});
 		//empty the field
 		$scope.insertGenre= '';
-		console.log("What Up?");
 	};
-
-	$scope.editGenre = function(genreId){
-		alert("ID: "+genreId);
-		$http.post('http://localhost:8080/lms/genre/edit', {genreId: genreId}).success(function(data) {
-		});
-	};
-
-	$scope.deleteGenre = function(genreId){
-		console.log(genreId);
-		$http.post('http://localhost:8080/lms/genre/delete', {genreId: genreId}).success(function(data) {
+	
+	//delete Genre
+	$scope.deleteGenre = function(index){
+		$http.post('http://localhost:8080/lms/genre/delete', {genreId: $scope.genres[index].genreId}).success(function(data) {
+			$scope.genres.splice(index, 1);
+		})
+		.error(function(data, status){
 			console.log(data);
-			$http.get('http://localhost:8080/lms/genres/get').success(function(data) {
-				$scope.genres = data;
-			});
-			$scope.orderProp = 'genreId';
 		});
-	};
-
+	}
 }]);
 
 libraryModule.controller('navController', ['$scope','$location',function($scope, $location){
